@@ -1,4 +1,5 @@
 const redis = require("redis");
+const db = require('./db');
 
 const redisClient = redis.createClient();
 redisClient.on("error", function(err) {
@@ -17,4 +18,9 @@ redisClient.has = (key = '') => {
   }
   return false;
 };
+
+db.setUser({
+  name: 'arnold',
+  password: '55555',
+});
 module.exports = redisClient;
