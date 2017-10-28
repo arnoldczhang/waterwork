@@ -27,7 +27,7 @@ module.exports = (config) => {
     },
     output: {
       path: resolveDir('../dist'),
-      publicPath: "../dist/",
+      publicPath: "/dist/",
       chunkFilename: '[name].[chunkhash].js',
       sourceMapFilename: '[file].[chunkhash].map',
       crossOriginLoading: 'anonymous',

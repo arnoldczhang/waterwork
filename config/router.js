@@ -15,9 +15,11 @@ let compiler;
   Renderers
  */
 async function index(ctx) {
+  const sessionId = ctx.cookies.get('mtdpsessionid');
+  const result = redis.has(sessionId);
   const data = {
-    word: `hello world`
-  }
+    loginState: result || '未登录',
+  };
   await ctx.render('layout', {
     body: compiler('index')(data),
   });
@@ -50,7 +52,7 @@ async function addUser (ctx) {
   Router
  */
 router
-  .get('/', index)
+  .get('/aaa', index)
   .get('/user', getUser)
   .post('/user', addUser)
   // .put('/users/:id', function *(next) {
