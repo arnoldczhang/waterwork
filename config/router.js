@@ -52,7 +52,7 @@ async function addUser (ctx) {
   Router
  */
 router
-  .get('/aaa', index)
+  .get('/', index)
   .get('/user', getUser)
   .post('/user', addUser)
   // .put('/users/:id', function *(next) {
