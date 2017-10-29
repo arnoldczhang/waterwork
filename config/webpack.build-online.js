@@ -1,11 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
+const noop = (err, state) => console.log(err, state);
 
 const resolveDir = (dir) => {
   return path.resolve(__dirname, dir);
 };
 
-module.exports = (config) => {
+module.exports = (config, cb = noop) => {
   const plugins = [
     new webpack.DefinePlugin({
       'process.env': config.env
@@ -38,7 +39,7 @@ module.exports = (config) => {
         {
           test: /\.jsx?$/,
           loader: 'babel-loader',
-          exclude: /node_module/     
+          exclude: /node_module/
         }
       ]
     },
@@ -50,7 +51,5 @@ module.exports = (config) => {
       },
       extensions: [".ts", ".tsx", ".js", ".json"],
     },
-  }, (err, stats) => {
-    console.log('ok');
-  });
+  }, cb);
 };

@@ -1,6 +1,58 @@
-<p><%= loginState %> is a .</p>
-<input type="text" name="username" id="username/><button id='loginBtn'>login</button>
+<article id="content">
+  <% if (loginState === '未登录') { %>
+    <section id="noLoginSection">
+      <p>请登录</p>
+      <input type="text" name="username" id="username" />
+      <input type="password" name="password" id="password" />
+      <button id="loginBtn">login</button>
+    </section>
+  <% } else { %>
+    <p id="loginSection">欢迎，<%= loginState.name %></p>
+  <% } %>
+  <textarea>
+  </textarea>
+  <button id="submit">提交</button>
+</article>
+
 <script type="text/javascript">
-$('#loginBtn').on('click', function (e) {
+$(function () {
+  var userName = $("#username");
+  var passWord = $("#password");
+  var noLoginSection = $("#noLoginSection");
+  var loginSection = $("#loginSection");
+  var content = $("#content");
+
+  $('#loginBtn').on('click', function (e) {
+    $.post('/login', {
+      name: userName.val(),
+      password: passWord.val(),
+    }, function (res) {
+      if (res.code !== 0) {
+        alert(res.message);
+      }
+
+      else {
+        noLoginSection.hide();
+        content.html('<p id="loginSection">欢迎，' + userName.val() + '</p>');
+      }
+    });
+  });
+
+  $('#submit').on('click', function (e) {
+    $.post('/save', {
+      id: 'test',
+      content: `
+        const a = 1;
+        const b = () => {
+          console.log('aaaa');
+        };
+      `,
+    }, function (res) {
+      if (res.code !== 0) {
+        alert(res.message);
+      }
+
+    });
+  });
 });
 </script>

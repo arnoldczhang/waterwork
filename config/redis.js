@@ -1,26 +1,30 @@
 const redis = require("redis");
-const db = require('./db');
-
+const logger = require('./log');
 const redisClient = redis.createClient();
+const isFunction = (func) => typeof func === 'function';
+const noop = () => {};
+
 redisClient.on("error", function(err) {
-    console.log("redis error " + err);
+    logger.error("redis error " + err);
 });
 
 redisClient.on("connect", () => {
-  console.log("redis server started...");
+  logger.info("redis server started...");
 });
 
-redisClient.has = (key = '') => {
-  if (key) {
-    const value = redisClient.get(key);
-    if (typeof value === 'undefined') return false;
-    return value;
-  }
-  return false;
+redisClient.has = (key = '', cb = noop) => {
+  return new Promise((resolve, reject) => {
+    if (key) {
+      return redisClient.get(key,  (err, res) => {
+        if (err) logger.error(err);
+        if (res == null) cb(false);
+        cb(res);
+        resolve(res);
+      });
+    }
+    cb(false);
+    resolve();
+  });
 };
 
-db.setUser({
-  name: 'arnold',
-  password: '55555',
-});
 module.exports = redisClient;
