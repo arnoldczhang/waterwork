@@ -1,9 +1,14 @@
 const mongo = require('./mongo');
-const noop = () => {};
+const noop = val => val;
 
-const setUser = (data = {}) => {
-  return mongo.connect((db) => {
-    return mongo.insertOrUpdateOne(db, 'user', { name: data.name }, data);
+const setUser = (data = {}, cb = noop) => {
+  return new Promise((resolve, reject) => {
+    return mongo.connect((db) => {
+      return mongo.insertOrUpdateOne(db, 'user', { name: data.name }, data, (res) => {
+        cb(res);
+        resolve();
+      });
+    });
   });
 };
 

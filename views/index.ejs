@@ -9,10 +9,11 @@
   <% } else { %>
     <p id="loginSection">欢迎，<%= loginState.name %></p>
   <% } %>
-  <textarea>
-  </textarea>
-  <button id="submit">提交</button>
 </article>
+<textarea id="code">
+</textarea>
+<button id="submit">提交</button>
+<iframe id="template" src="/demo.html"></iframe>
 
 <script type="text/javascript">
 $(function () {
@@ -21,6 +22,8 @@ $(function () {
   var noLoginSection = $("#noLoginSection");
   var loginSection = $("#loginSection");
   var content = $("#content");
+  var template = $("#template");
+  var code = $("#code");
 
   $('#loginBtn').on('click', function (e) {
     $.post('/login', {
@@ -38,18 +41,42 @@ $(function () {
     });
   });
 
+  $('#code').on('keydown', function (e) {
+    var keyCode = e.keyCode || e.which || e.charCode;
+    var ctrlKey = e.ctrlKey || e.metaKey;
+    if(ctrlKey && keyCode == 83) {
+      e.preventDefault();
+      $('#submit').trigger('click');
+    }
+  });
+
   $('#submit').on('click', function (e) {
     $.post('/save', {
       id: 'test',
-      content: `
-        const a = 1;
-        const b = () => {
-          console.log('aaaa');
-        };
-      `,
+      content: code.val(),
     }, function (res) {
       if (res.code !== 0) {
         alert(res.message);
+      }
+
+      else {
+        var script = document.createElement('script');
+        var body = template.get(0).contentDocument.body;
+        var child;
+        script.type = 'text/javascript';
+        if (script.innerHTML !== res.data) {
+          script.innerHTML = res.data;
+          script.id = 'test';
+          if (child || (child = body.querySelector('#test'))) {
+            body.replaceChild(script, child);
+            child = script;
+          }
+
+          else {
+            body.appendChild(script);
+          }
+        }
+        
       }
 
     });

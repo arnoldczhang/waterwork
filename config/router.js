@@ -16,7 +16,7 @@ let compiler;
 const extend = (...args) => Object.assign.apply(null, args);
 const isUndefined = (obj) => typeof obj === 'undefined';
 const getHash = () => {
-  const code = String(Math.random()).substr(2);
+  const code = +String(Math.random()).substr(2);
   return code.toString(36);
 };
 
@@ -79,6 +79,7 @@ async function save (ctx) {
       entryKey: data.id,
       entryUrl: srcUrl,
     }, (err, state) => {
+      console.log(1122)
       if (err) return;
       ctx.body = extend({}, response, {
         code: CODE.success,

@@ -44,9 +44,13 @@ const updateOne = (db, colName, query = {}, data = {}, cb = noop) => {
 const insertOrUpdateOne = (db, colName, query = {}, data = {}, cb = noop) => {
   const args = arguments;
   findOne(db, colName, query, (res) => {
-    updateOne.apply(null, args);
-  }, () => {
-    insertOne.apply(null, [db, colName, data, cb]);
+    if (res) {
+      updateOne.apply(null, args);
+    }
+
+    else {
+      insertOne.apply(null, [db, colName, data, cb]);
+    }
   });
 };
 

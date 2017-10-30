@@ -30,7 +30,7 @@ module.exports = (config, cb = noop) => {
       path: resolveDir('../dist'),
       publicPath: "/dist/",
       chunkFilename: '[name].[chunkhash].js',
-      sourceMapFilename: '[file].[chunkhash].map',
+      // sourceMapFilename: '[file].[chunkhash].map',
       crossOriginLoading: 'anonymous',
     },
     plugins,
