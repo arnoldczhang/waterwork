@@ -1,3 +1,54 @@
+<style>
+#code-space {
+  background-color:#1d1f20;
+  width: 100%;
+  height: 300px;
+  overflow-y: scroll;
+}
+#code-space::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+#code-space::-webkit-scrollbar-track-piece {
+    background-color: #ccc;
+    -webkit-border-radius: 6px;
+}
+#code-space::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: #666;
+    -webkit-border-radius: 6px;
+}
+#code-content {
+  height: 1000px;
+}
+.code-line {
+  font-size: 14px;
+  height: 16px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+.code-cursor {
+  width: 1px;
+  border-right: 1px solid #fff;
+  -webkit-animation:cursor 1s infinite;
+  animation:cursor 1s infinite;
+  display: none;
+}
+
+@keyframes cursor {
+  0% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@-webkit-keyframes cursor {
+  0% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+</style>
 <article id="content">
   <% if (loginState === '未登录') { %>
     <section id="noLoginSection">
@@ -14,6 +65,11 @@
 </textarea>
 <button id="submit">提交</button>
 <iframe id="template" src="/demo.html"></iframe>
+<article id="code-space">
+  <section id="code-content">
+    <span class="code-line code-cursor"></span>
+  </section>
+</article>
 
 <script type="text/javascript">
 $(function () {
@@ -24,6 +80,7 @@ $(function () {
   var content = $("#content");
   var template = $("#template");
   var code = $("#code");
+  var codeContent = $("#code-content");
 
   $('#loginBtn').on('click', function (e) {
     $.post('/login', {
@@ -76,10 +133,49 @@ $(function () {
             body.appendChild(script);
           }
         }
-        
+      }
+    });
+  });
+
+  var editing = false;
+  var editingEl = null;
+  $('#code-content').on('click', function (e) {
+    editing = true;
+    $('.code-cursor').css('display', 'inline-block');
+  })
+
+  $(document.body).on('click', function (e) {
+    editing = $('#code-content').get(0).contains(e.target);
+    $('.code-cursor').css('display', editing ? 'inline-block' : 'none');
+  }).on('keypress', function (e) {
+    var keyCode = e.keyCode || e.which || e.charCode;
+    console.log(keyCode)
+    if (editing && keyCode >= 34) {
+      if (editingEl) {
+        editingEl.textContent += String.fromCharCode(keyCode);
       }
 
-    });
+      else {
+        editingEl = document.createElement('span');
+        editingEl.className = 'code-line';
+        editingEl.textContent = String.fromCharCode(keyCode);
+        codeContent.append(editingEl);
+      }
+    }
+  }).on('keydown', function (e) {
+    var keyCode = e.keyCode || e.which || e.charCode;
+    // backspace
+    if (keyCode === 8) {
+      if (editingEl) {
+        editingEl.textContent = editingEl.textContent.substr(0, editingEl.textContent.length - 1);
+      }
+    }
+
+    // space
+    if (keyCode === 32) {
+      e.preventDefault();
+      editingEl.textContent += ' ';
+    }
   });
 });
 </script>

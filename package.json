@@ -9,7 +9,7 @@
     "dev": "redis-server /usr/local/etc/redis.conf & mongod & nodemon app.js",
     "mongo": "mongod --config \"C:\\\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongo.config\"",
     "redis": "redis-server \"C:\\\\Program Files\\Redis\\redis.windows.conf\"",
-    "dev:home": "nodemon app.js"
+    "dev:home": "node app.js"
   },
   "author": "arnold",
   "license": "MIT",
