@@ -1,4 +1,8 @@
 <style>
+p, div, span, section, article {
+  margin: 0;
+  padding: 0;
+}
 #code-space {
   background-color:#1d1f20;
   width: 100%;
@@ -21,7 +25,7 @@
 #code-content {
   height: 1000px;
 }
-.code-line {
+.code-part {
   font-size: 14px;
   height: 16px;
   color: #fff;
@@ -29,7 +33,8 @@
   display: inline-block;
 }
 .code-cursor {
-  width: 1px;
+  width: 0px;
+  height: 20px;
   border-right: 1px solid #fff;
   -webkit-animation:cursor 1s infinite;
   animation:cursor 1s infinite;
@@ -70,6 +75,7 @@
     <span class="code-line code-cursor"></span>
   </section>
 </article>
+  <input type="text" name="" id="fakeinput" style="opacity: 0;">
 
 <script type="text/javascript">
 $(function () {
@@ -80,7 +86,9 @@ $(function () {
   var content = $("#content");
   var template = $("#template");
   var code = $("#code");
-  var codeContent = $("#code-content");
+  var $codeContent = $("#code-content");
+  var $fakeinput = $("#fakeinput");
+  var codeContent = $codeContent.get(0);
 
   $('#loginBtn').on('click', function (e) {
     $.post('/login', {
@@ -138,49 +146,101 @@ $(function () {
   });
 
   var editing = false;
-  var editingEl = null;
+  var editingBox = null;
+  var currentEl = null;
+
+  function getLineStr (data) {
+    return `<div class="code-line">
+        <span class="code-part">${data}</span>
+      </div>
+    `;
+  };
+
   $('#code-content').on('click', function (e) {
     editing = true;
     $('.code-cursor').css('display', 'inline-block');
   })
 
   $(document.body).on('click', function (e) {
-    editing = $('#code-content').get(0).contains(e.target);
-    $('.code-cursor').css('display', editing ? 'inline-block' : 'none');
+    currentEl = e.target;
+    editing = codeContent.contains(currentEl);
+    $('.code-cursor').css('display', editing || currentEl === codeContent ? 'inline-block' : 'none');
   }).on('keypress', function (e) {
     var keyCode = e.keyCode || e.which || e.charCode;
-    console.log(keyCode)
     if (editing && keyCode >= 34) {
-      if (editingEl) {
-        editingEl.textContent += String.fromCharCode(keyCode);
+      $fakeinput.trigger('focus');
+      if (currentEl !== codeContent) {
+        currentEl = currentEl.classList.contains('code-line') ? currentEl.lastElementChild : currentEl;
+        currentEl.textContent += String.fromCharCode(keyCode);
       }
 
       else {
-        editingEl = document.createElement('span');
-        editingEl.className = 'code-line';
-        editingEl.textContent = String.fromCharCode(keyCode);
-        codeContent.append(editingEl);
+        var codeLine = $(getLineStr(String.fromCharCode(keyCode)));
+        currentEl = codeLine.get(0).querySelector('span');
+        $codeContent.append(codeLine);
       }
     }
   }).on('keydown', function (e) {
+    if (!editing) return;
     var keyCode = e.keyCode || e.which || e.charCode;
+
     // backspace
     if (keyCode === 8) {
-      if (editingEl) {
-        editingEl.textContent = editingEl.textContent.substr(0, editingEl.textContent.length - 1);
+      e.preventDefault();
+      if (currentEl) {
+        var len = currentEl.textContent.length;
+        if (!len) {
+          codeContent.removeChild(currentEl.parentNode);
+          currentEl = codeContent.lastElementChild.lastElementChild;
+        }
+
+        else {
+          currentEl.textContent = currentEl.textContent.substr(0, len - 1);
+        }
       }
     }
 
     // space
     if (keyCode === 32) {
       e.preventDefault();
-      editingEl.textContent += ' ';
+      currentEl.textContent += ' ';
     }
 
     // enter
     if (keyCode === 13) {
-      
+      var codeLine = $(getLineStr(''));
+      currentEl = codeLine.get(0).querySelector('span');
+      $codeContent.append(codeLine);
     }
+  });
+
+
+  var IMEinput = false;
+  $fakeinput.on('keyup keydown keypress', function (e) {
+    if (!IMEinput) {
+      e.target.value = '';
+    }
+  }).on('compositionstart', function (e) {
+    e.target.value = '';
+    IMEinput = true;
+    console.log('compositionstart');
+  }).on('compositionupdate', function (e) {
+    var keyCode = e.keyCode || e.which || e.charCode;
+    console.log(e.target.value);
+    // var alph = String.fromCharCode(keyCode).toLowerCase();
+    // if (currentEl !== codeContent) {
+    //   currentEl = currentEl.classList.contains('code-line') ? currentEl.lastElementChild : currentEl;
+    //   currentEl.textContent += alph;
+    // }
+
+    // else {
+    //   var codeLine = $(getLineStr(alph));
+    //   currentEl = codeLine.get(0).querySelector('span');
+    //   $codeContent.append(codeLine);
+    // }
+  }).on('compositionend', function (e) {
+    IMEinput = false;
+    console.log(e.target.value, 'end');
   });
 });
 </script>
