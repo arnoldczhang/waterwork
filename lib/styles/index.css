@@ -22,16 +22,24 @@ p, div, span, section, article {
     -webkit-border-radius: 6px;
 }
 #code-content {
+  position: relative;
   height: 1000px;
+}
+.code-line {
+  height: 20px;
+  line-height: 20px;
 }
 .code-part {
   font-size: 14px;
-  height: 16px;
+  height: 20px;
   color: #fff;
   position: relative;
   display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 .code-cursor {
+  position: absolute;
   width: 0px;
   height: 20px;
   border-right: 1px solid #fff;
