@@ -17,13 +17,13 @@ redisClient.has = (key = '', cb = noop) => {
     if (key) {
       return redisClient.get(key,  (err, res) => {
         if (err) logger.error(err);
-        if (res == null) cb(false);
-        cb(res);
-        resolve(res);
+        const result = res == null ? false : res;
+        cb(result);
+        resolve(result);
       });
     }
     cb(false);
-    resolve();
+    resolve(false);
   });
 };
 

@@ -1,19 +1,27 @@
-const path = require('path')
-const webpack = require('webpack')
+const path = require('path');
+const webpack = require('webpack');
+const HTMLPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    "webpack-hot-middleware/client?noInfo=true&reload=true",
-    "./views/vue/app",
+    "./views/vue/src/app.js",
   ],
   output: {
-    path: './views/vue/dist/',
-    filename: 'bundle.js',
-    publicPath: '/views/vue/dist/',
+    path: path.join(__dirname, 'lib/dist'),
+    filename: '[name].123.js',
+    // filename: '[name].[hash].js',
+    publicPath: '/dist/',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    }),
+    new HTMLPlugin({
+      template: 'views/vue/src/index.template.html',
+      filename: '../../views/vue/index.html'
+    }),
   ],
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -25,7 +33,7 @@ module.exports = {
         loader: 'eslint-loader',
         enforce: 'pre',
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter'),
         }
       },
       {

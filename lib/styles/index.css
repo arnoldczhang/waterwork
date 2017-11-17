@@ -31,7 +31,7 @@ p, div, span, section, article {
 }
 .code-part {
   font-size: 14px;
-  height: 20px;
+  min-height: 20px;
   color: #fff;
   position: relative;
   display: inline-block;

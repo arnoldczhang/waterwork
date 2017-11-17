@@ -1,12 +1,16 @@
 const fs = require('fs');
 const ejs = require('ejs');
 const router = require('koa-router')();
+
 const redis = require('./redis');
 const db = require('./db');
 const response = require('./response');
 const MSG = require('./message');
 const CODE = require('./code');
 const build = require('./build');
+// const renderer = require('./render');
+
+// const vueApp = require('../views/vue/App.js');
 
 let compiler;
 
@@ -79,7 +83,6 @@ async function save (ctx) {
       entryKey: data.id,
       entryUrl: srcUrl,
     }, (err, state) => {
-      console.log(1122)
       if (err) return;
       ctx.body = extend({}, response, {
         code: CODE.success,
@@ -117,21 +120,27 @@ async function addUser (ctx) {
 
 };
 
+async function vueShare (ctx) {
+  ctx.body = fs.readFileSync('./views/vue/index.html', 'utf-8');
+  // renderer.renderToString(vueApp, {
+  //   title: 'vue-plugin-share',
+  // }, (err, html) => {
+  //   if (err) throw err
+  //   ctx.body = html;
+  // });
+};
+
 /*
   Router
  */
 router
   .get('/', index)
+  .get('/vue-plugin-share', vueShare)
   .post('/login', login)
   .post('/save', save)
   .get('/user', getUser)
   .post('/user', addUser)
-  // .put('/users/:id', function *(next) {
-  //   // ...
-  // })
-  // .del('/users/:id', function *(next) {
-  //   // ...
-  // });
+  ;
 
 module.exports = (func) => {
   compiler = (fileName) => {
