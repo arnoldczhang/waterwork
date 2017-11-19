@@ -1,8 +1,8 @@
 <template>
-  <div class="imagePage" v-on:click="goNext()">
-    <h1 class="title">{{ title }}</h1>
+  <div class="listPage" v-on:click="goNext()">
+    <h2 class="contentTitle">{{ title }}</h2>
     <ul class="listUl">
-      <li v-for="item in list">{{ item }}</li>
+      <li class="listLi" v-for="item in list">{{ item }}</li>
     </ul>
   </div>
 </template>
@@ -38,33 +38,43 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 .title{
   font-weight: bold;
   font-size: 56px;
   color: #333;
-}
-.listUl {
+  margin: 0;
 
 }
-.imagePage {
+.listUl {
+  padding: 30px 0;
+  height: 75vh;
+  padding-left: 50px;
+  list-style: disc;
+}
+.listLi {
+  font-size: 36px;
+  padding-left: 30px;
+  color: #333;
+  display: block;
+  position: relative;
+}
+.listLi:before {
+  content: '';
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  display: inline-block;
+  position: absolute;
+  color: #333;
+  background-color: #666;
+}
+.listPage {
   height: 100%;
   width: 100%;
+  padding-top: 5vh;
 }
 </style>

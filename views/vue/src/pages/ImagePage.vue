@@ -1,7 +1,14 @@
 <template>
   <div class="imagePage" v-on:click="goNext()">
-    <h1 class="title">{{ title }}</h1>
-    <img class="imgImage" :src="img" />
+    <h2 class="contentTitle">{{ title }}</h2>
+    <section class="imgBox">
+      <img
+        class="imgImage"
+        v-for="item in img"
+        :src="item"
+        v-bind:style="styleObject"
+      />
+    </section>
   </div>
 </template>
 
@@ -24,11 +31,19 @@ export default {
       return state[this.getPageId()].title;
     },
     img() {
-      return state[this.getPageId()].image;
+      let img = state[this.getPageId()].image;
+      if (typeof img === 'string') {
+        img = [img];
+      }
+      this.styleObject.width = `${100 / img.length - 5}%`;
+      return img;
     },
   },
   data() {
     return {
+      styleObject: {
+        width: '100%',
+      },
     };
   },
 };
@@ -36,33 +51,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-.title{
-  font-weight: bold;
-  font-size: 56px;
-  color: #333;
+.imgBox {
+  margin-top: 5vh;
+  padding: 30px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 75vh;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .imgImage {
-
+  object-fit: cover;
 }
 .imagePage {
   height: 100%;
   width: 100%;
+  padding-top: 5vh;
 }
 </style>

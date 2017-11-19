@@ -47,5 +47,6 @@ a {
   font-weight: bold;
   font-size: 72px;
   color: #333;
+  text-align: center;
 }
 </style>

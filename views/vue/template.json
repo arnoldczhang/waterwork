@@ -3,14 +3,16 @@
   "2": {
     "type": "image",
     "title": "插件注册",
-    "image": "/images/bk3.png"
+    "image": [
+      "/images/tt.jpg"
+    ]
   },
   "3": {
     "type": "list",
     "title": "插件注册",
     "list": [
-      "aa",
-      "bb",
+      "mixin",
+      "Vue.prototype.xxx",
       "cc"
     ]
   },

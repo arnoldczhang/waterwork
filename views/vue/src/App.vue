@@ -27,7 +27,6 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   height: 100vh;
   width: 100vw;
 }
@@ -35,9 +34,27 @@ body, div, section, article {
   margin: 0;
   padding: 0;
 }
+.contentTitle{
+  font-weight: normal;
+  font-size: 56px;
+  color: #333;
+  margin: 0;
+  padding-left: 50px;
+  position: relative;
+}
+.contentTitle:before {
+  content: '';
+  height: 100%;
+  width: 20px;
+  left: 0;
+  display: inline-block;
+  position: absolute;
+  color: #333;
+  background-color: rgb(46, 182, 170);
+}
 .slide-to-enter-active, .slide-to-leave-active,
 .slide-back-enter-active, .slide-back-leave-active {
-  transition: 1s
+  transition: .7s
 }
 
 .slide-to-enter, .slide-to-leave-to {
