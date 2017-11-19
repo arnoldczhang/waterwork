@@ -8,9 +8,10 @@ const response = require('./response');
 const MSG = require('./message');
 const CODE = require('./code');
 const build = require('./build');
-// const renderer = require('./render');
+const renderer = require('./render');
 
-// const vueApp = require('../views/vue/App.js');
+const vueApp = require('../views/vue/App.js');
+const jsonText = fs.readFileSync('./views/vue/template.json', 'utf8');
 
 let compiler;
 
@@ -121,13 +122,13 @@ async function addUser (ctx) {
 };
 
 async function vueShare (ctx) {
-  ctx.body = fs.readFileSync('./views/vue/index.html', 'utf-8');
-  // renderer.renderToString(vueApp, {
-  //   title: 'vue-plugin-share',
-  // }, (err, html) => {
-  //   if (err) throw err
-  //   ctx.body = html;
-  // });
+  await renderer.renderToString(vueApp(), {
+    initialState: `<script>window.INITIAL_STATE = ${jsonText};</script>`,
+    title: 'vue-plugin-share',
+  }, (err, html) => {
+    if (err) throw err
+    ctx.body = html;
+  });
 };
 
 /*

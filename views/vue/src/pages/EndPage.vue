@@ -1,14 +1,13 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div class="endPage">
+    <h1 class="title">{{ title }}</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'hello',
+  name: 'entrance',
   mounted() {
-
   },
   methods: {
   },
@@ -16,17 +15,13 @@ export default {
   },
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App',
+      title: 'End',
     };
   },
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
 
 ul {
   list-style-type: none;
@@ -40,5 +35,17 @@ li {
 
 a {
   color: #42b983;
+}
+.endPage {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.title{
+  font-weight: bold;
+  font-size: 72px;
+  color: #333;
 }
 </style>

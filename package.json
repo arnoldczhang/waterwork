@@ -9,7 +9,8 @@
     "dev": "redis-server /usr/local/etc/redis.conf & mongod & webpack-dashboard -- nodemon app.js",
     "mongo": "mongod --config \"C:\\\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongo.config\"",
     "redis": "redis-server \"C:\\\\Program Files\\Redis\\redis.windows.conf\"",
-    "dev:home": "webpack-dashboard -- node app.js"
+    "webpack": "webpack -w",
+    "dev:home": "nodemon app.js"
   },
   "author": "arnold",
   "license": "MIT",
@@ -95,6 +96,7 @@
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.3.0",
     "shelljs": "^0.7.8",
+    "webpack-dashboard": "^1.0.2",
     "webpack-merge": "^4.1.1"
   },
   "engines": {

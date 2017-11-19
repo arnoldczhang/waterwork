@@ -1,0 +1,20 @@
+{
+  "1": "Vue插件分享",
+  "2": {
+    "type": "image",
+    "title": "插件注册",
+    "image": "/images/bk3.png"
+  },
+  "3": {
+    "type": "list",
+    "title": "插件注册",
+    "list": [
+      "aa",
+      "bb",
+      "cc"
+    ]
+  },
+  "4": {
+    "type": "demo"
+  }
+}

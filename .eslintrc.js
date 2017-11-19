@@ -33,6 +33,8 @@ module.exports = {
       'js': 'never',
       'vue': 'never'
     }],
+    'linebreak-style': ['off', 'awlays'],
+    'object-shorthand': ['off', 'awlays'],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
   }
