@@ -35,7 +35,7 @@ export default {
       if (typeof img === 'string') {
         img = [img];
       }
-      this.styleObject.width = `${100 / img.length - 5}%`;
+      this.styleObject.width = `${(100 / img.length) - 5}%`;
       return img;
     },
   },

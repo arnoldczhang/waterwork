@@ -1,9 +1,17 @@
 <html>
   <head>
     <title>{{ title }}</title>
+    <style type="text/css">
+      .author {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+      }
+    </style>
   </head>
   <body>
     {{{ initialState }}}
     <!--vue-ssr-outlet-->
+    <section class="author">2017.12.7 张骋</section>
   </body>
 </html>

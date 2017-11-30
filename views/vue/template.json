@@ -1,22 +1,54 @@
 {
-  "1": "Vue插件分享",
+  "1": "Vue插件浅析",
   "2": {
-    "type": "image",
-    "title": "插件注册",
-    "image": [
-      "/images/tt.jpg"
+    "type": "list",
+    "title": "目录",
+    "list": [
+      "创建插件",
+      "使用插件",
+      "插件内部",
+      "动手实践"
     ]
   },
   "3": {
-    "type": "list",
-    "title": "插件注册",
+    "type": "list2",
+    "title": "创建插件",
     "list": [
-      "mixin",
-      "Vue.prototype.xxx",
-      "cc"
+      "object.install",
+      "function"
     ]
   },
   "4": {
     "type": "demo"
+  },
+  "5": {
+    "type": "list",
+    "title": "使用插件",
+    "list": [
+      "Vue.use"
+    ]
+  },
+  "6": {
+    "type": "demo"
+  },
+  "7": {
+    "type": "list",
+    "title": "插件内部",
+    "list": [
+      "添加基于Vue对象的方法或者属性",
+      "添加指令/过滤器/过渡",
+      "通过Vue.mixin，添加hook",
+      "添加Vue原型方法"
+    ]
+  },
+  "8": {
+    "type": "demo"
+  },
+  "9": {
+    "type": "image",
+    "title": "动手实践",
+    "image": [
+      "/images/tt.jpg"
+    ]
   }
 }

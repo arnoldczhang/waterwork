@@ -15,7 +15,7 @@ export default {
   },
   data() {
     return {
-      title: 'End',
+      title: 'end',
     };
   },
 };

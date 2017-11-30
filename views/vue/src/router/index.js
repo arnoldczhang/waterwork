@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import EnterPage from '../pages/EnterPage.vue';
 // import WordPage from '../pages/WordPage.vue';
 import ListPage from '../pages/ListPage.vue';
+import ListPage2 from '../pages/ListPage2.vue';
 import ImagePage from '../pages/ImagePage.vue';
 import Demo from '../pages/Demo.vue';
 import EndPage from '../pages/EndPage.vue';
@@ -21,6 +22,7 @@ const routes = [
   },
 ];
 const componentMap = {
+  list2: ListPage2,
   list: ListPage,
   image: ImagePage,
   demo: Demo,

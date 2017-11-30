@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bin.js",
-    "dev": "redis-server /usr/local/etc/redis.conf & mongod & webpack-dashboard -- nodemon app.js",
+    "dev": "redis-server /usr/local/etc/redis.conf & mongod & webpack & nodemon app.js",
     "mongo": "mongod --config \"C:\\\\Program Files\\MongoDB\\Server\\3.4\\bin\\mongo.config\"",
     "redis": "redis-server \"C:\\\\Program Files\\Redis\\redis.windows.conf\"",
     "webpack": "webpack -w",

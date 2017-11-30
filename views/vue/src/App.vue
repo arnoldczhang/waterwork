@@ -54,7 +54,8 @@ body, div, section, article {
 }
 .slide-to-enter-active, .slide-to-leave-active,
 .slide-back-enter-active, .slide-back-leave-active {
-  transition: .7s
+  -webkit-transition: .5s;
+  transition: .5s;
 }
 
 .slide-to-enter, .slide-to-leave-to {
